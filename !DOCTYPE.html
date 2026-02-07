@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Para usted, Iovanna 💚</title>
+  <style>
+    :root{
+      --bg1:#f3fff7;
+      --bg2:#e7fff1;
+      --card:#ffffffcc;
+      --text:#253025;
+      --accent:#2f9e44;     /* verde principal */
+      --accent2:#63e6be;    /* verde menta */
+      --shadow: 0 18px 50px rgba(0,0,0,.12);
+      --radius: 22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 20% 10%, var(--bg1), transparent),
+        radial-gradient(1000px 650px at 80% 20%, var(--bg2), transparent),
+        linear-gradient(135deg, #fff, #eefdf3);
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+    }
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 26px 16px 60px;
+      display:grid;
+      gap:18px;
+    }
+    header{
+      text-align:center;
+      padding: 18px 12px 6px;
+    }
+    h1{
+      margin: 10px 0 6px;
+      font-size: clamp(26px, 4vw, 42px);
+      letter-spacing: .2px;
+    }
+    .sub{
+      margin:0;
+      opacity:.88;
+      font-size: clamp(14px, 2.2vw, 16px);
+      line-height: 1.5;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .9fr;
+      gap:18px;
+      align-items:start;
+    }
+    @media (max-width: 860px){ .grid{grid-template-columns:1fr} }
+
+    .card{
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.7);
+      backdrop-filter: blur(8px);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      padding: 18px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 12px;
+      background: rgba(47,158,68,.12);
+      border: 1px solid rgba(47,158,68,.22);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #1b6b2a;
+    }
+
+    .bigText{
+      font-size: clamp(16px, 2.6vw, 18px);
+      line-height:1.55;
+      margin: 10px 0 12px;
+    }
+
+    .msg{
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(0,0,0,.06);
+      min-height: 52px;
+    }
+
+    .btnRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top: 12px;
+    }
+
+    button{
+      border:0;
+      padding: 12px 14px;
+      border-radius: 14px;
+      font-weight: 900;
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .12s ease, background .2s ease;
+      user-select:none;
+    }
+    button:active{transform: translateY(1px) scale(.99)}
+    .primary{
+      background: linear-gradient(135deg, var(--accent), #1f7a33);
+      color:white;
+      box-shadow: 0 14px 28px rgba(47,158,68,.28);
+    }
+    .ghost{
+      background: rgba(255,255,255,.7);
+      border: 1px solid rgba(0,0,0,.08);
+    }
+    .danger{
+      background: rgba(0,0,0,.06);
+      border: 1px solid rgba(0,0,0,.10);
+      border-style: dashed;
+    }
+    .primary:hover,.ghost:hover{transform: translateY(-1px)}
+
+    /* corazones */
+    .heart{
+      position: fixed;
+      font-size: 18px;
+      pointer-events:none;
+      animation: floatUp 1.6s ease-out forwards;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.12));
+      z-index: 999;
+    }
+    @keyframes floatUp{
+      from{ transform: translate(-50%, 0) scale(.9); opacity:1; }
+      to{ transform: translate(-50%, -140px) scale(1.3); opacity:0; }
+    }
+
+    /* juego */
+    .steps{display:grid; gap:12px; margin-top:12px;}
+    .step{
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(0,0,0,.06);
+      display:grid;
+      gap:10px;
+    }
+    .stepTop{
+      display:flex; justify-content:space-between; align-items:center; gap:10px;
+    }
+    .tag{
+      font-size:12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.85);
+      border: 1px solid rgba(0,0,0,.06);
+      font-weight: 900;
+      opacity:.9;
+    }
+    .options{
+      display:flex; flex-wrap:wrap; gap:8px;
+    }
+    .opt{
+      font-weight:900;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.9);
+      border: 1px solid rgba(0,0,0,.07);
+      cursor:pointer;
+    }
+    .opt:hover{transform: translateY(-1px)}
+    .locked{
+      opacity:.45;
+      pointer-events:none;
+      filter: grayscale(.15);
+    }
+
+    /* tulipán simple con CSS */
+    .tulip{
+      width: 68px;
+      height: 68px;
+      margin: 8px auto 0;
+      position: relative;
+    }
+    .tulip .bud{
+      width: 34px;
+      height: 34px;
+      background: radial-gradient(circle at 30% 30%, #ffb3c1, #ff5c8a);
+      border-radius: 18px 18px 18px 18px;
+      position:absolute;
+      left: 17px; top: 6px;
+      transform: rotate(2deg);
+      box-shadow: 0 10px 18px rgba(0,0,0,.12);
+    }
+    .tulip .stem{
+      width: 8px;
+      height: 38px;
+      background: linear-gradient(180deg, #2f9e44, #1f7a33);
+      border-radius: 999px;
+      position:absolute;
+      left: 30px; top: 28px;
+    }
+    .tulip .leaf{
+      width: 24px; height: 12px;
+      background: rgba(47,158,68,.9);
+      border-radius: 999px;
+      position:absolute;
+      top: 40px;
+      filter: drop-shadow(0 6px 8px rgba(0,0,0,.10));
+    }
+    .tulip .leaf.l{ left: 10px; transform: rotate(-18deg); }
+    .tulip .leaf.r{ right: 10px; transform: rotate(18deg); }
+
+    /* carta */
+    .divider{
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,0,0,.12), transparent);
+      margin: 12px 0 10px;
+    }
+    .letterWrap{
+      margin-top: 26px;
+      padding-top: 10px;
+      display:none; /* OCULTA por defecto */
+    }
+    .letter{
+      white-space: pre-line;
+      line-height: 1.75;
+      font-size: 16px;
+    }
+    .signature{
+      margin-top: 10px;
+      font-weight: 900;
+      color: #1b6b2a;
+    }
+    .scrollBtn{ display:none; }
+
+    .hint{
+      font-size: 12px;
+      opacity: .72;
+      margin-top: 8px;
+    }
+    .toast{
+      margin-top:10px;
+      font-size:13px;
+      opacity:.86;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="badge">💌 Para usted</div>
+      <h1>Iovanna, esto es para usted 💚</h1>
+      <p class="sub">
+        Le preparé una página tierna y un poquito graciosa 😌<br/>
+        Primero un jueguito… y cuando gane, se desbloquea la carta.
+      </p>
+      <div class="tulip" aria-hidden="true">
+        <div class="bud"></div>
+        <div class="stem"></div>
+        <div class="leaf l"></div>
+        <div class="leaf r"></div>
+      </div>
+    </header>
+
+    <section class="grid">
+      <!-- Card izquierda -->
+      <div class="card">
+        <p class="bigText">
+          Antes de empezar, una pregunta seria (pero no tanto):<br/>
+          <b>Le mando un beshito ¿quiere beshito mi amor?</b> 😳
+        </p>
+
+        <div class="btnRow">
+          <button class="primary" id="yesBtn">Sí, tiene permiso 💚</button>
+          <button class="danger" id="noBtn">No 🙈</button>
+          <button class="ghost" id="moreBtn">Más corazoncitos 💘</button>
+        </div>
+
+        <div class="msg" id="mainMsg">Estoy esperando su respuesta con paciencia… (mentira, con nervios) 👀</div>
+        <div class="toast" id="progressText">Juego: 0/3 completado</div>
+
+        <div class="steps" id="steps">
+          <!-- Pregunta 1 -->
+          <div class="step" data-step="1">
+            <div class="stepTop">
+              <div><b>Pregunta 1:</b> Memoria de amor</div>
+              <div class="tag">Fácil 😌</div>
+            </div>
+            <div><b>¿Cual es la fecha de nuestro primer beso?</b></div>
+            <div class="options">
+              <div class="opt good">26 de abril</div>
+              <div class="opt bad">24 de abril</div>
+              <div class="opt bad">21 de abril</div>
+            </div>
+          </div>
+
+          <!-- Pregunta 2 -->
+          <div class="step locked" data-step="2">
+            <div class="stepTop">
+              <div><b>Pregunta 2:</b> Pista romántica</div>
+              <div class="tag">Medio 😳</div>
+            </div>
+            <div><b>¿Cual fue el primer regalo que le di?</b></div>
+            <div class="options">
+              <div class="opt bad">Un almuerzo</div>
+              <div class="opt good">Un collar del Oso</div>
+              <div class="opt bad">Flores</div>
+            </div>
+          </div>
+
+          <!-- Pregunta 3 -->
+          <div class="step locked" data-step="3">
+            <div class="stepTop">
+              <div><b>Pregunta 3:</b> La frase legendaria</div>
+              <div class="tag">Final 💞</div>
+            </div>
+            <div><b>¿Cual fue la frase que puse en la primer foto suya que publique?</b></div>
+            <div class="options">
+              <div class="opt good">Enculaito de ella</div>
+              <div class="opt bad">Lo mucho que me encanta</div>
+              <div class="opt bad">Enamorado de ella</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="btnRow">
+          <button class="primary scrollBtn" id="goLetter">Listo ✅ ver la carta 👇</button>
+          <button class="ghost" id="resetGame">Reiniciar juego 🔁</button>
+        </div>
+
+        <div class="hint">
+          Tip: si el botón “No” se pone tímido… es porque yo lo programé así 😅
+        </div>
+      </div>
+
+      <!-- Card derecha -->
+      <div class="card">
+        <div class="badge">🎮 Mini-juego</div>
+        <p class="bigText" style="margin-top:10px">
+          Reglas: solo hay 3 preguntas y <b>usted puede con todas</b> 😌<br/>
+          Premio: desbloquear la carta + un montón de corazoncitos.
+        </p>
+        <div class="msg" id="sideMsg">
+          Consejo serio: si se equivoca, no pasa nada… igual la amo 💚 (y lo sabe).
+        </div>
+      </div>
+    </section>
+
+    <!-- CARTA (oculta al inicio) -->
+    <section class="letterWrap" id="letterSection">
+      <div class="card">
+        <div class="badge">📝 Carta</div>
+        <div class="divider"></div>
+        <div class="letter">
+Desde que me enamore de uste no hay un solo dia que no pase por mis pensamientos, todos los dias quiero verla, abrazarla, dale muchos besos y sobre todo hacerla sentir amada.
+
+Mi vida ha cambiado desde que la conozco, mis dias son mejores y siempre me motivo a ser mejor persona porque usted merece todo lo bueno de mi.
+
+La amo tanto, mis sentimientos por usted no tienen limites y pase lo que pase yo me esforzare tanto porque usted se sienta segura y amada conmigo.
+
+En serio la amo tanto Iovanna &lt;3
+        </div>
+        <div class="signature">— Con cariño SU NOVIOOOO</div>
+      </div>
+    </section>
+
+    <div class="hint" style="text-align:center; margin-top:6px;">
+      la amo muchito mi amor 🌷
+    </div>
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const moreBtn = document.getElementById('moreBtn');
+    const mainMsg = document.getElementById('mainMsg');
+    const sideMsg = document.getElementById('sideMsg');
+    const progressText = document.getElementById('progressText');
+    const steps = document.getElementById('steps');
+    const goLetter = document.getElementById('goLetter');
+    const letterSection = document.getElementById('letterSection');
+    const resetGame = document.getElementById('resetGame');
+
+    // Verificación rápida por si se pegó incompleto
+    if (!yesBtn || !noBtn || !moreBtn || !steps || !goLetter || !letterSection || !resetGame || !mainMsg || !sideMsg || !progressText) {
+      alert("Algo no cargó bien. Verifique que el archivo sea .html (no .txt) y que copió TODO el código completo.");
+      return;
+    }
+
+    let completed = 0;
+    const doneSteps = new Set();
+
+    function popHearts(x, y, n=10){
+      const hearts = ["💚","💖","💘","💕","💗","💓","💞","❤️"];
+      for(let i=0;i<n;i++){
+        const el = document.createElement('div');
+        el.className = 'heart';
+        el.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+        const dx = (Math.random()*60 - 30);
+        const dy = (Math.random()*20);
+        el.style.left = (x + dx) + 'px';
+        el.style.top  = (y + dy) + 'px';
+        el.style.fontSize = (14 + Math.random()*16) + 'px';
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 1700);
+      }
+    }
+
+    // Botón "No" tímido
+    noBtn.addEventListener('mouseenter', () => {
+      const pad = 14;
+      const maxX = window.innerWidth - noBtn.offsetWidth - pad;
+      const maxY = window.innerHeight - noBtn.offsetHeight - pad;
+
+      const x = Math.random() * (maxX - pad) + pad;
+      const y = Math.random() * (maxY - pad) + pad;
+
+      noBtn.style.position = "fixed";
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+
+      mainMsg.textContent = "Ese 'No' se puso nervioso… mejor diga que sí 😅";
+    });
+
+    yesBtn.addEventListener('click', (e) => {
+      mainMsg.innerHTML = "Permiso aceptado 😚💞 <b>Beso virtual enviado</b>. (Y vienen refuerzos).";
+      sideMsg.textContent = "Confirmado: usted tiene efectos secundarios… como hacerme sonreír.";
+      popHearts(e.clientX, e.clientY, 16);
+    });
+
+    moreBtn.addEventListener('click', () => {
+      popHearts(window.innerWidth/2, window.innerHeight/2, 26);
+      mainMsg.textContent = "Sobra evidencia: usted está oficialmente consentida 💘";
+    });
+
+    // Juego por pasos
+    steps.addEventListener('click', (e) => {
+      const opt = e.target.closest('.opt');
+      if(!opt) return;
+
+      const stepEl = e.target.closest('.step');
+      if(!stepEl) return;
+
+      const step = stepEl.getAttribute('data-step');
+
+      if(stepEl.classList.contains('locked')) return;
+      if(doneSteps.has(step)) return;
+
+      const good = opt.classList.contains('good');
+
+      if(good){
+        doneSteps.add(step);
+        completed++;
+
+        stepEl.style.borderColor = "rgba(47,158,68,.35)";
+        stepEl.style.background = "rgba(47,158,68,.06)";
+        sideMsg.innerHTML = "Perfecto 😌✅ Pregunta " + step + " correcta.";
+        popHearts(window.innerWidth*0.7, window.innerHeight*0.55, 12);
+
+        // Desbloquear la siguiente
+        const nextStep = String(Number(step) + 1);
+        const next = steps.querySelector('.step[data-step="' + nextStep + '"]');
+        if(next){
+          next.classList.remove('locked');
+          sideMsg.textContent = "Siguiente pregunta desbloqueada… usted puede 💚";
+        }
+
+        progressText.innerHTML = "Juego: <b>" + completed + "/3</b> completado";
+        mainMsg.textContent = (completed === 3)
+          ? "¡Lo logró! 😍 Ahora sí… su carta está lista 👇"
+          : "Va excelente… yo sabía que usted podía 😌";
+
+      } else {
+        sideMsg.textContent = "Esa casi… 😅 pero tranquila, usted no pierde por ser linda.";
+        mainMsg.textContent = "Intente otra opción… (yo confío en usted) 💚";
+        popHearts(e.clientX, e.clientY, 6);
+      }
+
+      // Al completar 3/3: mostrar carta y botón
+      if(completed === 3){
+        letterSection.style.display = "block";
+        goLetter.style.display = "inline-flex";
+        popHearts(window.innerWidth/2, window.innerHeight*0.2, 18);
+      }
+    });
+
+    goLetter.addEventListener('click', () => {
+      letterSection.scrollIntoView({behavior:"smooth", block:"start"});
+      popHearts(window.innerWidth/2, window.innerHeight*0.2, 18);
+    });
+
+    resetGame.addEventListener('click', () => {
+      completed = 0;
+      doneSteps.clear();
+
+      progressText.textContent = "Juego: 0/3 completado";
+      mainMsg.textContent = "Reinicio listo… ¿lista para ganar otra vez? 😌";
+      sideMsg.textContent = "Regla nueva: usted siempre gana (porque sí). 💚";
+
+      steps.querySelectorAll('.step').forEach(el => {
+        el.style.borderColor = "rgba(0,0,0,.06)";
+        el.style.background = "rgba(255,255,255,.78)";
+        if(el.getAttribute('data-step') !== "1") el.classList.add('locked');
+      });
+
+      // Ocultar carta y botón
+      letterSection.style.display = "none";
+      goLetter.style.display = "none";
+
+      // Reset del botón tímido
+      noBtn.style.position = "";
+      noBtn.style.left = "";
+      noBtn.style.top = "";
+
+      popHearts(window.innerWidth/2, window.innerHeight/2, 14);
+    });
+
+    // Click suave = corazoncitos
+    document.addEventListener('click', (e) => {
+      if(e.target.closest('button') || e.target.closest('.opt')) return;
+      popHearts(e.clientX, e.clientY, 5);
+    });
+  });
+  </script>
+</body>
+</html>
